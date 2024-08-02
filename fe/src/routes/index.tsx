@@ -14,6 +14,7 @@ import ShopPage from "@/pages/(website)/product/page";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import AddProduct from "@/pages/(dashboard)/product/add/page";
+import EditProduct from "@/pages/(dashboard)/product/edit/page";
 
 const Router = () => {
     return (
@@ -40,7 +41,7 @@ const Router = () => {
                 >
                     <Route path="products" element={<ProductManagement />} />
                     <Route path="products/add" element={<AddProduct />} />
-                    {/*<Route path="products/:id/edit" element={<FormProduct />} /> */}
+                    <Route path="products/edit/:id" element={<EditProduct />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

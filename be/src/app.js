@@ -1,20 +1,29 @@
-import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB } from "./config/connect";
-import Routes_Products from "./routers/products";
-import Routes_categories from "./routers/category";
-import Routes_auth from "./routers/auth";
+import express from "express";
 import morgan from "morgan";
-dotenv.config();
+
+import { connectDB } from "./config/db";
+import authRouter from "./routers/auth";
+import productRouter from "./routers/product";
+import categoryRouter from "./routers/category";
+import cartRouter from "./routers/cart";
+import orderRouter from "./routers/order";
 const app = express();
+dotenv.config();
+// middleware
 app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
 
+// connect db
 connectDB(process.env.DB_URI);
 
-app.use("/api/v1", Routes_Products);
-app.use("/api/v1", Routes_categories);
-app.use("/api/v1", Routes_auth);
+// routers
+app.use("/api", authRouter);
+app.use("/api", productRouter);
+app.use("/api", categoryRouter);
+app.use("/api", cartRouter);
+app.use("/api", orderRouter);
+
 export const viteNodeApp = app;

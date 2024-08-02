@@ -1,7 +1,6 @@
 import { LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
-import { Button } from "./ui/button";
 
 const NavbarRoutes = () => {
     return (
@@ -9,11 +8,11 @@ const NavbarRoutes = () => {
             <div className="hidden md:block">
                 <SearchInput />
             </div>
-            <div className="flex gap-x-2 ml-auto">
+            <div className="flex ml-auto gap-x-2">
                 <Link to="/">
-                    <Button size="sm" variant="secondary">
-                        <LogOut className="h-4 w-4 mr-2" /> Thoát
-                    </Button>
+                    {/* <Button size="sm" variant="secondary">
+                        <LogOut className="w-4 h-4 mr-2" /> Thoát
+                    </Button> */}
                 </Link>
             </div>
         </>

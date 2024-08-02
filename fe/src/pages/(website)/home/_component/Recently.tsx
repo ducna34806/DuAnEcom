@@ -1,7 +1,6 @@
 import { IProduct } from "@/common/types/product";
 import instance from "@/configs/axios";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
 const Recently = () => {
     const { data } = useQuery({
@@ -44,14 +43,14 @@ const Recently = () => {
                 </div>
                 <div className="grid lg:pt-16 lg:pb-[120px] lg:mt-[7px] mb:pb-[61px] lg:grid-cols-[276px_276px_276px_276px] mb:grid-cols-[159px_159px] border-y justify-between lg:gap-y-8 mb:gap-y-[29px] mb:pt-8">
                     {data &&
-                        data.data.products.map((product: IProduct) => (
+                        data?.data?.docs.map((product: IProduct) => (
                             <div className="grid grid-cols-[100%] lg:auto-rows-[240px_auto] mb:auto-rows-[160px_auto] lg:gap-y-6 mb:gap-y-[27px] overflow-hidden h-full rounded-xl">
                                 {/* img */}
                                 <div className="relative group w-full lg:h-[240px] mb:h-[160px] bg-[#F4F4F4] rounded-xl grid place-items-center">
                                     <img
                                         className="lg:w-[164px] mb:w-[120px] lg:h-[164px] mb:h-[120px]"
-                                        src={product.image_product}
-                                        alt=""
+                                        src={product.image}
+                                        alt={product.name}
                                     />
                                     <button className="absolute scale-0 group-hover:scale-100 group-hover:translate-y-0 -translate-y-[200%] duration-200 z-[2] lg:w-[152px] mb:w-[136px] lg:h-[64px] mb:h-[48px] rounded-[100px] border-none bg-[#1A1E2630] text-sm text-white backdrop-blur-md">
                                         Out Of Stock
@@ -68,7 +67,7 @@ const Recently = () => {
                                         </strong>
                                         <a href={`/products/${product._id}`}>
                                             <strong className="lg:text-lg text-center mb:text-base font-normal text-[#1A1E26]">
-                                                {product.name_product}
+                                                {product.name}
                                                 <br className="lg:hidden" />
                                             </strong>
                                         </a>
@@ -104,7 +103,7 @@ const Recently = () => {
                                     <div className="flex flex-col gap-y-2 items-center lg:translate-y-0 mb:-translate-y-[2.5px]">
                                         <div className="flex mb:text-sm lg:text-base lg:mb-3 mb:mb-2.5">
                                             <span className="text-[#EB2606]">
-                                                $ {product.price_product}
+                                                $ {product.price}
                                             </span>
                                             <span>/ gram</span>
                                         </div>

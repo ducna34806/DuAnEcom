@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Checkbox, FormProps, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import instance from "@/configs/axios";
 import { IoIosArrowBack } from "react-icons/io";
 type FieldType = {
@@ -13,15 +13,24 @@ type FieldType = {
     countInStock: number;
     image: string;
     description: string;
+    discount: number;
     category: string;
 };
-const AddProduct = () => {
+
+const EditProduct = () => {
+    const { id } = useParams();
     const [messageApi, contextHolder] = message.useMessage();
     const [form] = Form.useForm();
+    const queryClient = useQueryClient();
+    const { data, isLoading } = useQuery({
+        queryKey: ["products", id],
+        queryFn: () => instance.get(`/products/${id}`),
+    });
+
     const { mutate } = useMutation({
         mutationFn: async (formData: FieldType) => {
             try {
-                return await instance.post(`/products`, formData);
+                return await instance.put(`/products/${id}`, formData);
             } catch (error) {
                 throw new Error(error as any).message;
             }
@@ -29,9 +38,11 @@ const AddProduct = () => {
         onSuccess: () => {
             messageApi.open({
                 type: "success",
-                content: "Thêm mới sản phẩm thành công",
+                content: "Cập nhật sản phẩm thành công",
             });
-            form.resetFields();
+            queryClient.invalidateQueries({
+                queryKey: ["products"],
+            });
         },
         onError: (error) => {
             messageApi.open({
@@ -44,12 +55,12 @@ const AddProduct = () => {
         console.log("Success:", values);
         mutate(values);
     };
-
+    if (isLoading) return <div>Loading...</div>;
     return (
         <>
             {contextHolder}
             <div className="flex items-center justify-between">
-                <h1 className="text-xl">Thêm sản phẩm</h1>
+                <h1 className="text-xl">Cập nhật sản phẩm</h1>
                 <Link to="/admin/products">
                     <Button>
                         <IoIosArrowBack />
@@ -62,7 +73,7 @@ const AddProduct = () => {
                     form={form}
                     name="basic"
                     layout="vertical"
-                    // initialValues={{ remember: true }}
+                    initialValues={{ ...data?.data }}
                     onFinish={onFinish}
                 >
                     {" "}
@@ -139,4 +150,4 @@ const AddProduct = () => {
         </>
     );
 };
-export default AddProduct;
+export default EditProduct;

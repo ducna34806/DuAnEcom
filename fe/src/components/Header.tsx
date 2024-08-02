@@ -89,7 +89,7 @@ const Header = () => {
             <div className="w-full mb:hidden lg:block">
                 <div className="w-full flex justify-center items-center *:flex *:justify-center">
                     <div className="gap-x-[49.5px] h-[56px] items-center">
-                        <a href="../src/products.html">Shop All</a>
+                        <a href="/shop">Shop All</a>
                         <a href="../src/detail.html">Flower</a>
                         <a href="../src/cart.html">Edibles</a>
                         <a href="">Concentrates</a>

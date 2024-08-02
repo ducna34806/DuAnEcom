@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import instance from "@/configs/axios";
-import { DataTable } from "./DataTable";
-import { columns } from "./Columns";
 import { useNavigate } from "react-router-dom";
 const ProductList = () => {
     const queryClient = useQueryClient();
@@ -33,12 +31,12 @@ const ProductList = () => {
         <>
             <h1>Quản lý sản phẩm </h1>
             <button onClick={() => handleAdd()}>Them moi</button>
-            <div className="container py-10 mx-auto">
+            {/* <div className="container py-10 mx-auto">
                 <DataTable
                     columns={columns({ handleDelete })}
                     data={data?.data.products}
                 />
-            </div>
+            </div> */}
         </>
     );
 };
